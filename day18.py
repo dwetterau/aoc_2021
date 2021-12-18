@@ -85,20 +85,26 @@ def main(f):
 
         return num
 
-    number = []
+    numbers = []
     for i, l in enumerate(f.readlines()):
-        next_num = eval(l.strip())
-        if not number:
-            number = next_num
-            continue
-        number = reduce([number, next_num])
+        numbers.append(l.strip())
 
     def magnitude(num):
         if type(num) == int:
             return num
         return 3*magnitude(num[0]) + 2*magnitude(num[1])
-    print(number)
-    print(magnitude(number))
+
+    biggest = 0
+    
+    for i in range(len(numbers)):
+        for j in range(len(numbers)):
+            if i == j:
+                continue
+
+            r = reduce([eval(numbers[i]), eval(numbers[j])])
+            biggest = max(biggest, magnitude(r))
+
+    print(biggest)
 
 
 if __name__ == "__main__":
